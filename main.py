@@ -45,7 +45,8 @@ def scrape_and_save():
     
     # 利用多處理進行並行爬取與儲存
     with Pool(processes=6) as pool:
-        results = pool.starmap(scrape_hospital_and_save, [(scraper[0], scraper[1], scraper[2]) for scraper in hospital_scrapers])
+        results = pool.starmap(scrape_hospital_and_save, [(scraper[0], scraper[1], scraper[2])\
+        for scraper in hospital_scrapers])
     
     print("所有資料已成功儲存到資料庫")
 
