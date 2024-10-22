@@ -5,15 +5,21 @@ import HospitalScrapy
 
 # 建立資料庫連接
 def connect_to_db():
+    db_type = os.getenv("DB_TYPE")
     db_username = os.getenv("DB_USERNAME")
     db_password = os.getenv("DB_PASSWORD")
     db_host = os.getenv("DB_HOST")
     db_name = os.getenv("DB_NAME")
     
+    # 根據 db_type 決定使用的連接字串，MySQL為本地端測試用，雲端資料庫為PostgreSQL
+    if db_type == "mysql":
+        connection_string = f'mysql+pymysql://{db_username}:{db_password}@{db_host}/{db_name}'
+    elif db_type == "postgresql":
+        connection_string = f'postgresql+psycopg2://{db_username}:{db_password}@{db_host}/{db_name}'
+    else:
+        raise ValueError("不支援的資料庫類型，請選擇 'mysql' 或 'postgresql'")
     # 使用 sqlalchemy 建立資料庫連接
-    connection_string = f'mysql+pymysql://{db_username}:{db_password}@{db_host}/{db_name}'
     engine = create_engine(connection_string)
-    
     return engine
 
 # 將 DataFrame 儲存到資料庫
@@ -62,7 +68,6 @@ def scrape_hospital_and_save(scraper_name, param, table_name):
     elif scraper_name == "SinlauScraper":
         df = HospitalScrapy.SinlauScraper(param)
     
-    # 檢查資料框是否有資料
     if df is not None:
         save_to_db(df, table_name)
 
