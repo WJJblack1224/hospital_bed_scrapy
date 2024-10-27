@@ -6,3 +6,5 @@ selenium
 webdriver-manager
 psycopg2-binary
 pymysql
+Flask
+psycopg2-binary
