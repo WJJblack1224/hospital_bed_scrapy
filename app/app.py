@@ -1,9 +1,12 @@
 import os
 from flask import Flask, jsonify, request
 import psycopg2
-
+from dotenv import load_dotenv
 
 app = Flask(__name__)
+
+#載入環境變數
+load_dotenv()
 
 # 使用 PostgreSQL 資料庫連線
 def connect_db():
@@ -14,7 +17,7 @@ def connect_db():
         password=os.getenv("DB_PASSWORD")
     )
 
-@app.route("/fetch_data", methods=["GET"])
+@app.route("/", methods=["GET"])
 def fetch_data():
     try:
         conn = connect_db()
