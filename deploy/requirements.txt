@@ -1,0 +1,11 @@
+sqlalchemy
+pandas
+requests
+beautifulsoup4
+selenium
+webdriver-manager
+psycopg2-binary
+pymysql
+Flask
+python-dotenv
+lxml
