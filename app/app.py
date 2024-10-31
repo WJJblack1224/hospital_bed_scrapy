@@ -1,9 +1,11 @@
 import os
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 import psycopg2
 from dotenv import load_dotenv
 
 app = Flask(__name__)
+CORS(app) 
 
 #載入環境變數
 load_dotenv()
