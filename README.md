@@ -12,5 +12,5 @@
 - **資料庫**：使用 `Google Cloud SQL`（PostgreSQL）儲存數據，並透過 `SQLAlchemy` 進行資料庫連線
 - **API**：使用 `Flask` 框架來構建後端API服務
 - **雲端部署**：使用 `Docker` 將應用容器化，並部署至 `GCP Cloud Run`，利用 `Cloud Scheduler` 定期觸發爬蟲程式更新數據
-  
+  - - -
 ![專案圖片](img/flowchart.png)
