@@ -15,9 +15,26 @@
     </style>
 </head>
 <body>
-    <div class="container" id="hospitalContainer">
+    <div class="container">
         <h2>醫院病床資訊</h2>
+
+        <!-- 新增醫院選擇下拉選單 -->
+        <label for="hospitalSelect">選擇醫院:</label>
+        <select id="hospitalSelect">
+            <option value="all">全部</option>
+            <option value="chimei_main">奇美醫院</option>
+            <option value="chimei_liuying">柳營奇美醫院</option>
+            <option value="chimei_jiali">佳里奇美醫院</option>
+            <option value="kuo">郭綜合醫院</option>
+            <option value="annan">安南醫院</option>
+            <option value="tainan">台南醫院</option>
+            <option value="nckuh">成大醫院</option>
+            <option value="sinlau_tainan">台南新樓醫院</option>
+            <option value="sinlau_madou">麻豆新樓醫院</option>
+        </select>
+
         <!-- 表格容器 -->
+        <div id="hospitalContainer"></div>
     </div>
 
     <script src="script.js"></script>

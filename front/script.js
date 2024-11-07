@@ -1,14 +1,38 @@
-document.addEventListener("DOMContentLoaded", fetchAndRenderData);
+document.addEventListener("DOMContentLoaded", () => {
+    // 載入所有醫院資料
+    fetchAndRenderData();
+    
+    // 選擇特定醫院的按鈕
+    document.getElementById("hospitalSelect").addEventListener("change", (event) => {
+        const hospitalKey = event.target.value;
+        if (hospitalKey === "all") {
+            fetchAndRenderData(); // 顯示所有醫院
+        } else {
+            fetchSingleHospitalData(hospitalKey); // 顯示特定醫院
+        }
+    });
+});
 
 function fetchAndRenderData() {
-    // API URL
-    fetch("API_URL")  
+    fetch("API_URL")
         .then(response => response.json())
         .then(data => {
             renderHospitalTables(data);
         })
         .catch(error => {
             console.error("Error fetching data:", error);
+            document.getElementById("hospitalContainer").innerHTML = "無法取得資料";
+        });
+}
+
+function fetchSingleHospitalData(hospitalKey) {
+    fetch(`API_URL/${hospitalKey}`)
+        .then(response => response.json())
+        .then(data => {
+            renderHospitalTables({ [hospitalKey]: data });
+        })
+        .catch(error => {
+            console.error("Error fetching single hospital data:", error);
             document.getElementById("hospitalContainer").innerHTML = "無法取得資料";
         });
 }
@@ -27,13 +51,13 @@ function renderHospitalTables(data) {
     };
 
     const container = document.getElementById("hospitalContainer");
+    container.innerHTML = ""; 
 
     for (const hospitalKey in data) {
         if (data.hasOwnProperty(hospitalKey)) {
             const hospitalData = data[hospitalKey];
             const hospitalName = hospitalNames[hospitalKey] || hospitalKey;
 
-            // 建立每個醫院的標題和表格元素
             const hospitalSection = document.createElement("div");
             hospitalSection.classList.add("hospital-table");
 
@@ -45,7 +69,6 @@ function renderHospitalTables(data) {
             const thead = document.createElement("thead");
             const headerRow = document.createElement("tr");
 
-            // 表格標題
             ["病床類別", "總床數", "佔床數", "空床數", "佔床率"].forEach(headerText => {
                 const th = document.createElement("th");
                 th.innerText = headerText;
@@ -55,7 +78,6 @@ function renderHospitalTables(data) {
             thead.appendChild(headerRow);
             table.appendChild(thead);
 
-            // 表格內容
             const tbody = document.createElement("tbody");
 
             hospitalData.forEach(bedInfo => {
